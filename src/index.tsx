@@ -1,25 +1,31 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import registerServiceWorker from './registerServiceWorker';
-import './index.css';
-import Hello from './containers/Hello';
-import { createStore } from 'redux';
-import { enthusiasm } from './reducers/index';
-import { StoreState } from './types/index';
-import { Provider } from 'react-redux';
+import * as React from "react"
+import * as ReactDOM from "react-dom"
 
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 
-const store = createStore<StoreState>(enthusiasm, {
-  enthusiasmLevel: 1,
-  languageName: 'TypeScript',
-});
+import { ApolloClient, createNetworkInterface, ApolloProvider } from 'react-apollo';
 
-ReactDOM.render(
-  <Provider store={store}>
-    <Hello />
-  </Provider>,
-  document.getElementById('root') as HTMLElement
+import App from './App';
+
+let client = new ApolloClient({
+  networkInterface: createNetworkInterface({
+    uri: 'http://127.0.0.1:5000/graphql'
+  })
+})
+
+const store = createStore(
+  combineReducers({
+    apollo: client.reducer(),
+  }),
+  { },
+  compose(
+      applyMiddleware(client.middleware()),
+  )
 );
 
-// TODO what's this?
-registerServiceWorker();
+ReactDOM.render(
+  <ApolloProvider store={store} client={client}>
+    <App />
+  </ApolloProvider>,
+  document.getElementById('root') as HTMLElement,
+)

@@ -1,5 +1,16 @@
 import * as React from 'react';
+import '../../node_modules/graphiql/graphiql.css';
 
+const GraphiQL = require('graphiql');
+const fetch = require('isomorphic-fetch');
+
+function graphQLFetcher(graphQLParams: Object) {
+  return fetch("http://localhost:5000" + '/graphql', {
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(graphQLParams),
+  }).then((response: any) => response.json());
+}
 export interface Props {
   name: string;
   enthusiasmLevel?: number;
@@ -14,6 +25,7 @@ function Hello({ name, enthusiasmLevel = 1, onIncrement, onDecrement }: Props) {
 
   return (
     <div className="hello">
+			<GraphiQL fetcher={graphQLFetcher} />
       <div className="greeting">
         Hello {name + getExclamationMarks(enthusiasmLevel)}
       </div>
