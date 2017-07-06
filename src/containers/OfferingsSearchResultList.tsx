@@ -6,19 +6,54 @@ import OfferingsSearchResultList from '../components/OfferingsSearchResultList';
 let opts = { 
   options: ({ offeringTypes }) => { 
     return { variables: { offeringTypes: offeringTypes } };
-  } 
+  },
+  props: (props) => {
+    if (props.data.loading) {
+      return { isLoading: true };
+    }
+
+    return {
+      error: props.data.error ? props.data.error.message : null,
+      isLoading: props.data.loading,
+      results: props.data.offeringSearch.map((searchResult) => {
+        return {
+          durationType: searchResult.durationType.codeName,
+          startDate: searchResult.startDate,
+          name: searchResult.offering.name,
+          courseType: searchResult.offering.offeringCourse.offeringCourseCategory.codeName,
+        }
+      })
+    }
+  }
 }
 
-let OfferingSearchResultListWithData = graphql(gql`
+let OfferingsSearchResultListWithState = connect<any, any, any>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OfferingsSearchResultList);
+
+let OfferingsSearchResultListWithData = graphql(gql`
   query Stuff($offeringTypes: [Int]) {
     offeringSearch(filter:{
       offeringCourseCategoryIds: $offeringTypes
     }) {
-      offeringId
+      startDate
+      durationType {
+        codeName
+      }
+      offering {
+        name
+        offeringCourse {
+          offeringCourseCategory {
+            codeName
+          }
+        }
+      }
     }
-  }`, opts)(OfferingsSearchResultList);
+  }`, opts)(OfferingsSearchResultListWithState);
 
-function mapStateToProps (state: any) {
+function mapStateToProps (state: any, props: any) {
+  console.log(state, props);
   return state;
 }
 
@@ -26,9 +61,4 @@ function mapDispatchToProps (dispatch: any) {
   return { };
 }
 
-let OfferingsSearchResultListWithState = connect<any, any, any>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OfferingSearchResultListWithData);
-
-export default OfferingsSearchResultListWithState;
+export default OfferingsSearchResultListWithData;
