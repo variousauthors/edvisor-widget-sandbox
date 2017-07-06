@@ -1,11 +1,12 @@
 import * as React from 'react';
 import './App.css';
-import OfferingsSearch from './containers/OfferingsSearch'
+import OfferingsSearch from '../containers/OfferingsSearch'
+import OfferingsSearchResultList from '../containers/OfferingsSearchResultList'
 
-const logo = require('./logo.svg');
+const logo = require('../logo.svg');
 
-class App extends React.Component<{}, {}> {
-  render() {
+function App (props) {
+
     return (
       <div className="App">
         <div className="App-header">
@@ -13,9 +14,9 @@ class App extends React.Component<{}, {}> {
           <h2>Welcome to React</h2>
         </div>
 				<OfferingsSearch />
+				<OfferingsSearchResultList offeringTypes={ props.searchParameters.offeringTypes } />
       </div>
     );
-  }
 }
 
 export default App;

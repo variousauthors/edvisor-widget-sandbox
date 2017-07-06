@@ -3,12 +3,14 @@ import * as React from 'react';
 function Select (props: any) {
   let optionElements = props.data.map((opt: any, index: number) => {
     return (
-      <option key={ index } value={ opt.codeName } >{ opt.codeName }</option>
+      <option key={ index } value={ opt.offeringCourseCategoryId } >{ opt.codeName }</option>
     )
   })
 
   return (
-    <select>
+    <select onChange={ (e) => {
+      props.onChange([e.target.value]);
+    } }>
       { optionElements }
     </select>
   )
@@ -27,7 +29,10 @@ export default function OfferingsSearch (props: any) {
 
   return (
     <form>
-      <Select data={ props.data.offeringCourseCategories } />
+      <Select 
+        data={ props.data.offeringCourseCategories } 
+        onChange={ props.onChange }
+      />
     </form>
   )
 }
