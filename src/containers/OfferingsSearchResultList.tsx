@@ -9,11 +9,14 @@ let OfferingsSearchResultListWithState = connect<any, any, any>(
 )(OfferingsSearchResultList);
 
 let opts = { 
-  options: ({ offeringTypes }) => {
-    return { variables: { offeringTypes: offeringTypes } };
+  options: (props) => {
+
+    return { variables: { offeringTypes: props.offeringTypes } };
   },
-  skip: ({ offeringTypes }) => {
-    return offeringTypes.length < 1;
+  skip: (props) => {
+    console.log(props)
+
+    return props.offeringTypes.length < 1;
   },
   props: (props) => {
     if (props.data.loading) {

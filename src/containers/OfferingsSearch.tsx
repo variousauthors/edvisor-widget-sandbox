@@ -33,7 +33,6 @@ let OfferingsSearchWithData = graphql(gql`{
 }`, options)(OfferingsSearchWithState);
 
 function mapStateToProps (state: any, props) {
-  console.log(state, props);
   return state;
 }
 

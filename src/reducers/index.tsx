@@ -10,19 +10,12 @@ export function searchParameters(state = initialSearchParameters, { type, filter
 
 	switch (type) {
 		case 'SET_SEARCH_FILTERS':
-			console.log(filters);
 			let offeringTypes = state.offeringTypes.slice();
 			let age = Object.assign({}, state.age, filters.age);
 
 			if (filters.offeringTypes) {
 				offeringTypes = offeringTypes.concat(filters.offeringTypes);
 			}
-
-			console.log({
-				...state,
-				age,
-				offeringTypes,
-			});
 
 			return {
 				...state,
