@@ -50,10 +50,10 @@ try paginating
      [] Duration: at least/any ; n ; durationType
      [] Start Date: DateRangeInput
 
-[] display list of results
+[x] display list of results
    - BLOCKED need the data to format the results nicely
      - we have the name, but need school, agency, etc...
-   [] display: 
+   [x] display some data:
      - name, CourseType: offeringType, duration, 
      - start date
      - what is intensity? derived from duration?
@@ -67,8 +67,8 @@ try paginating
 + get the graphiQL tool setup
   + api-server v2 (https://github.com/edvisor-io/api-server-v2)
   + install some DBs: MariaDB, MongoDB
-- add Apollo
-- make queries against the api
++ add Apollo
++ make queries against the api
 - add React-Router
 
 ### Questions ###

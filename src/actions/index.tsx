@@ -1,8 +1,9 @@
 
-export function setOfferingTypes (offeringTypes) {
+export function setSearchFilters (filters) {
 
 	return {
-		type: 'SET_OFFERING_TYPES',
-		offeringTypes: offeringTypes,
+		type: 'SET_SEARCH_FILTERS',
+		filters: filters,
 	}
 }
+

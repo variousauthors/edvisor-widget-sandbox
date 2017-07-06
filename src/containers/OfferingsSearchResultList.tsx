@@ -3,9 +3,17 @@ import { connect } from 'react-redux';
 
 import OfferingsSearchResultList from '../components/OfferingsSearchResultList';
 
+let OfferingsSearchResultListWithState = connect<any, any, any>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OfferingsSearchResultList);
+
 let opts = { 
-  options: ({ offeringTypes }) => { 
+  options: ({ offeringTypes }) => {
     return { variables: { offeringTypes: offeringTypes } };
+  },
+  skip: ({ offeringTypes }) => {
+    return offeringTypes.length < 1;
   },
   props: (props) => {
     if (props.data.loading) {
@@ -13,6 +21,7 @@ let opts = {
     }
 
     return {
+      networkStatus: props.data.networkStatus,
       error: props.data.error ? props.data.error.message : null,
       isLoading: props.data.loading,
       results: props.data.offeringSearch.map((searchResult) => {
@@ -26,11 +35,6 @@ let opts = {
     }
   }
 }
-
-let OfferingsSearchResultListWithState = connect<any, any, any>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OfferingsSearchResultList);
 
 let OfferingsSearchResultListWithData = graphql(gql`
   query Stuff($offeringTypes: [Int]) {
@@ -53,7 +57,6 @@ let OfferingsSearchResultListWithData = graphql(gql`
   }`, opts)(OfferingsSearchResultListWithState);
 
 function mapStateToProps (state: any, props: any) {
-  console.log(state, props);
   return state;
 }
 

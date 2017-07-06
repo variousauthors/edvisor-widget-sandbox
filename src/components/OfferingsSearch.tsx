@@ -1,37 +1,67 @@
 import * as React from 'react';
 
-function Select (props: any) {
-  let optionElements = props.data.map((opt: any, index: number) => {
+function AgeFilter (props: any) {
+  let rangeOptions = [
+    { value: 'gte', name: "and older" },
+    { value: 'lte', name: "and younger" },
+    { value: 'eq', name: "exactly" },
+  ]
+
+  return (
+    <div>
+      <input 
+        type='number' 
+        min='0'
+        step='1'
+        onChange={ (e) => props.onChange({ years: parseInt(e.target.value) })  }/>
+      <Select data={ rangeOptions } onChange={ (stuff) => props.onChange({ range: stuff }) } />
+    </div>
+  );
+}
+
+function Select ({ data, onChange, map = (opt) => opt }) {
+  let optionElements = data.map((opt: any, index: number) => {
+    if (map) {
+      opt = map(opt);
+    }
+
     return (
-      <option key={ index } value={ opt.offeringCourseCategoryId } >{ opt.codeName }</option>
+      <option key={ index } value={ opt.value } >{ opt.name }</option>
     )
   })
 
   return (
-    <select onChange={ (e) => {
-      props.onChange([e.target.value]);
-    } }>
+    <select onChange={ (e) => { onChange(parseInt(e.target.value)); } }>
       { optionElements }
     </select>
   )
 }
 
 export default function OfferingsSearch (props: any) {
-  let data = props.data;
 
-  if (data.networkStatus === 1) {
-    return ( <div>BUSY</div> );
+  if (props.isLoading) {
+    return ( <div>Loading</div> );
   }
 
-  if (data.error) {
-    return ( <div>Error! {data.error.message}</div> );
+  if (props.error) {
+    return ( <div>Error! {props.error.message}</div> );
   }
+
+  let optionData = props.results;
+  let optionMap = ({ offeringCourseCategoryId, codeName }) => ({
+    value: offeringCourseCategoryId,
+    name: codeName,
+  });
 
   return (
     <form>
+      <AgeFilter
+        onChange={ (stuff) => { props.onChange({ age: stuff }); } }
+      />
       <Select 
-        data={ props.data.offeringCourseCategories } 
-        onChange={ props.onChange }
+        data={ optionData }
+        map={ optionMap }
+        onChange={ (stuff) => { props.onChange({ offeringTypes: [stuff]}); } }
       />
     </form>
   )
