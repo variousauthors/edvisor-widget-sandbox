@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { setSearchFilters } from '../actions/index';
 import OfferingsSearch from '../components/OfferingsSearch';
 
-let OfferingsSearchWithState = connect(
+let OfferingsSearchWithState = connect<any, any, any>(
   mapStateToProps,
   mapDispatchToProps,
 )(OfferingsSearch);
@@ -24,7 +24,7 @@ let options = {
   }
 }
 
-let OfferingsSearchWithData = graphql(gql`{
+let OfferingsSearchWithData = graphql<any, any, any>(gql`{
   offeringCourseCategories {
     offeringCourseCategoryId
     depth

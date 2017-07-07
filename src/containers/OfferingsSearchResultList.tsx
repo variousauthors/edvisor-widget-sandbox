@@ -39,7 +39,7 @@ let opts = {
   }
 }
 
-let OfferingsSearchResultListWithData = graphql(gql`
+let OfferingsSearchResultListWithData = graphql<any, any, any>(gql`
   query Stuff($offeringTypes: [Int]) {
     offeringSearch(filter:{
       offeringCourseCategoryIds: $offeringTypes

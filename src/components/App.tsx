@@ -15,7 +15,7 @@ function App (props) {
         <h2>Welcome to React</h2>
       </div>
 
-      <OfferingsSearch />
+      <OfferingsSearch onSubmit={ () => {} }/>
       <OfferingsSearchResultList offeringTypes={ props.searchParameters.offeringTypes } />
     </div>
   );
