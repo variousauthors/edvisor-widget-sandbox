@@ -21,6 +21,10 @@ let options = {
       isLoading: props.data.loading,
       results: props.data.offeringCourseCategories.filter((category) => (category.depth > 1)),
     }
+  },
+  skip: (props) => {
+    console.log("OfferingSearch Skip");
+    return false;
   }
 }
 

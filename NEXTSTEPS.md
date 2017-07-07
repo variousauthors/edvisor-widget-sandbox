@@ -78,3 +78,10 @@ try paginating
    - can create them for gte and lte
 [] Nationality
    - where is the list of nationalities, why not expose it through api-v2
+
+### NOTES ###
+
+ - when connecting components
+   1. call graphql, then call connect -> mapStateToProps called before Skip
+   2. call connect, then call graphql -> skip  called before mapStateToProps
+   - I _feel_ like 1. is the way

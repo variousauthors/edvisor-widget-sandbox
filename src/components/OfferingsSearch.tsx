@@ -38,6 +38,7 @@ function Select ({ data, onChange, map = (opt) => opt }) {
 }
 
 export default function OfferingsSearch (props: any) {
+  console.log("OfferingsSearch Render");
 
   if (props.isLoading) {
     return ( <div>Loading</div> );
@@ -54,7 +55,7 @@ export default function OfferingsSearch (props: any) {
   });
 
   return (
-    <form>
+    <form onSubmit={ (e) => { e.preventDefault(); console.log("hey"); props.onSubmit(); } }>
       <AgeFilter
         onChange={ (stuff) => { props.onChange({ age: stuff }); } }
       />
@@ -63,6 +64,7 @@ export default function OfferingsSearch (props: any) {
         map={ optionMap }
         onChange={ (stuff) => { props.onChange({ offeringTypes: [stuff]}); } }
       />
+      <input type="submit" value="Find Courses" />
     </form>
   )
 }

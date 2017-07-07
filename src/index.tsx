@@ -37,6 +37,7 @@ const store = createStore(
   )
 );
 
+console.log("ReactDOM Render");
 ReactDOM.render(
   <ApolloProvider store={store} client={client}>
     <App />

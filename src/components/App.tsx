@@ -1,12 +1,14 @@
 import * as React from 'react';
 import './App.css';
-import OfferingsSearch from '../containers/OfferingsSearch'
-import OfferingsSearchResultList from '../containers/OfferingsSearchResultList'
+
+import OfferingsSearchProvider from '../containers/OfferingSearchProvider';
+import OfferingsSearch from '../containers/OfferingsSearch';
+import OfferingsSearchResultList from '../containers/OfferingsSearchResultList';
 
 const logo = require('../logo.svg');
 
 function App (props) {
-  console.log(props);
+  console.log("App Render");
 
   return (
     <div className="App">
@@ -15,8 +17,10 @@ function App (props) {
         <h2>Welcome to React</h2>
       </div>
 
-      <OfferingsSearch onSubmit={ () => {} }/>
-      <OfferingsSearchResultList offeringTypes={ props.searchParameters.offeringTypes } />
+      <OfferingsSearchProvider>
+        <OfferingsSearch />
+        <OfferingsSearchResultList />
+      </OfferingsSearchProvider>
     </div>
   );
 }
