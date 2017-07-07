@@ -10,7 +10,8 @@ function OfferingsSearchProvider (props) {
   // child needs to provide argument to refetch    return { variables: { offeringTypes: props.offeringTypes } };
   let children = React.Children.map(props.children, (child) => {
     let bob = React.cloneElement(child as React.ReactElement<any>, {
-      refetch: props.refetch
+      refetch: props.refetch,
+      results: props.results,
     });
 
     return bob;
@@ -28,12 +29,13 @@ let opts = {
     return { variables: { offeringTypes: [] } };
   },
   skip: (props) => {
-    console.log("Provider Skip");
+    console.log("Provider Skip?");
     console.log(props);
 
     return !props.offeringTypes || props.offeringTypes.length < 1;
   },
   props: (props) => {
+    console.log("Provider PROVIDES");
     if (props.data.loading) {
       return { isLoading: true };
     }
@@ -75,6 +77,13 @@ let OfferingsSearchProviderWithData = graphql<any, any, any>(gql`
     }
   }`, opts)(OfferingsSearchProvider);
 
+let OfferingsSearchProviderWithState = connect<any, any, any>(
+  mapStateToProps,
+  mapDispatchToProps,
+  null,
+  { pure: true }
+)(OfferingsSearchProviderWithData);
+
 function mapStateToProps (state: any, props: any) {
   console.log("Provider mapStateToProps");
   console.log(state, props);
@@ -82,12 +91,6 @@ function mapStateToProps (state: any, props: any) {
     offeringTypes: state.searchParameters.offeringTypes 
   };
 }
-
-let OfferingsSearchProviderWithState = connect<any, any, any>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OfferingsSearchProviderWithData);
-
 
 function mapDispatchToProps (dispatch: any) {
   return { };

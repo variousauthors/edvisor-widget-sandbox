@@ -4,11 +4,6 @@ import { connect } from 'react-redux';
 import { setSearchFilters } from '../actions/index';
 import OfferingsSearch from '../components/OfferingsSearch';
 
-let OfferingsSearchWithState = connect<any, any, any>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OfferingsSearch);
-
 let options = {
   props: (props) => {
     if (props.data.loading) {
@@ -34,10 +29,16 @@ let OfferingsSearchWithData = graphql<any, any, any>(gql`{
     depth
     codeName
   }
-}`, options)(OfferingsSearchWithState);
+}`, options)(OfferingsSearch);
+
+let OfferingsSearchWithState = connect<any, any, any>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OfferingsSearchWithData);
 
 function mapStateToProps (state: any, props) {
-  return state;
+  console.log("OfferingSearch mapStateToProps");
+  return { };
 }
 
 function mapDispatchToProps (dispatch: any) {
@@ -48,4 +49,4 @@ function mapDispatchToProps (dispatch: any) {
   };
 }
 
-export default OfferingsSearchWithData;
+export default OfferingsSearchWithState;

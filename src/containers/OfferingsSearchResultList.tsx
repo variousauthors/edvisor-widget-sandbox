@@ -8,9 +8,7 @@ let OfferingsSearchResultListWithState = connect<any, any, any>(
 )(OfferingsSearchResultList);
 
 function mapStateToProps (state: any, props: any) {
-  return {
-    offeringTypes: state.searchParameters.offeringTypes
-  };
+  return { };
 }
 
 function mapDispatchToProps (dispatch: any) {

@@ -85,3 +85,8 @@ try paginating
    1. call graphql, then call connect -> mapStateToProps called before Skip
    2. call connect, then call graphql -> skip  called before mapStateToProps
    - I _feel_ like 1. is the way
+
+ - our queries do not return an id field so Apollo may have trouble caching them
+   - see: http://dev.apollodata.com/react/cache-updates.html#normalization
+   - Pavol was getting caching I think tho, so who knows!?
+
