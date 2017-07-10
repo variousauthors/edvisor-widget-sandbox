@@ -5,14 +5,14 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { ApolloClient, createNetworkInterface, ApolloProvider } from 'react-apollo';
 
 import App from './containers/App';
-import { searchParameters } from './reducers/index'
+import { searchFilters } from './reducers/index';
 
 let networkInterface = createNetworkInterface({
     uri: 'http://127.0.0.1:5000/graphql',
-})
+});
 
 networkInterface.use([{
-  applyMiddleware(req, next) {
+  applyMiddleware(req: any, next: any) {
     if (!req.options.headers) {
       req.options.headers = {};  // Create the header object if needed.
     }
@@ -28,7 +28,7 @@ let client = new ApolloClient({
 
 const store = createStore(
   combineReducers({
-    searchParameters,
+    searchFilters,
     apollo: client.reducer(),
   }),
   {},
@@ -37,7 +37,6 @@ const store = createStore(
   )
 );
 
-console.log("ReactDOM Render");
 ReactDOM.render(
   <ApolloProvider store={store} client={client}>
     <App />

@@ -1,9 +1,16 @@
 
-export function setSearchFilters (filters) {
+export function editCourseSearchFilters (filters) {
 
 	return {
-		type: 'SET_SEARCH_FILTERS',
+		type: 'EDIT_COURSE_SEARCH_FILTERS',
 		filters: filters,
+	}
+}
+
+export function publishCourseSearchFilters () {
+
+	return {
+		type: 'PUBLISH_COURSE_SEARCH_FILTERS'
 	}
 }
 

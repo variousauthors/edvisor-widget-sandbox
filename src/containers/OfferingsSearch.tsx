@@ -1,7 +1,7 @@
 import { graphql, gql } from 'react-apollo';
 import { connect } from 'react-redux';
 
-import { setSearchFilters } from '../actions/index';
+import { publishCourseSearchFilters, editCourseSearchFilters } from '../actions/index';
 import OfferingsSearch from '../components/OfferingsSearch';
 
 let options = {
@@ -16,10 +16,6 @@ let options = {
       isLoading: props.data.loading,
       results: props.data.offeringCourseCategories.filter((category) => (category.depth > 1)),
     }
-  },
-  skip: (props) => {
-    console.log("OfferingSearch Skip");
-    return false;
   }
 }
 
@@ -37,15 +33,18 @@ let OfferingsSearchWithState = connect<any, any, any>(
 )(OfferingsSearchWithData);
 
 function mapStateToProps (state: any, props) {
-  console.log("OfferingSearch mapStateToProps");
   return { };
 }
 
 function mapDispatchToProps (dispatch: any) {
   return {
-    onChange: (filters) => {
-      dispatch(setSearchFilters(filters));
-    }
+    publishSearchFilters: () => {
+      dispatch(publishCourseSearchFilters());
+    },
+    editSearchFilters: (filters) => {
+      console.log(filters);
+      dispatch(editCourseSearchFilters(filters));
+    },
   };
 }
 

@@ -13,8 +13,8 @@ function AgeFilter (props: any) {
         type='number' 
         min='0'
         step='1'
-        onChange={ (e) => props.onChange({ years: parseInt(e.target.value) })  }/>
-      <Select data={ rangeOptions } onChange={ (stuff) => props.onChange({ range: stuff }) } />
+        onChange={ (e) => props.onChange({ age: parseInt(e.target.value) })  }/>
+      <Select data={ rangeOptions } onChange={ (value) => props.onChange({ ageRange: value }) } />
     </div>
   );
 }
@@ -31,14 +31,13 @@ function Select ({ data, onChange, map = (opt) => opt }) {
   })
 
   return (
-    <select onChange={ (e) => { onChange(parseInt(e.target.value)); } }>
+    <select onChange={ (e) => { onChange(e.target.value); } }>
       { optionElements }
     </select>
   )
 }
 
 export default function OfferingsSearch (props: any) {
-  console.log("OfferingsSearch Render");
 
   if (props.isLoading) {
     return ( <div>Loading</div> );
@@ -55,14 +54,14 @@ export default function OfferingsSearch (props: any) {
   });
 
   return (
-    <form onSubmit={ (e) => { e.preventDefault(); console.log("hey"); props.onSubmit(); } }>
+    <form onSubmit={ (e) => { e.preventDefault(); props.publishSearchFilters(); } } >
       <AgeFilter
-        onChange={ (stuff) => { props.onChange({ age: stuff }); } }
+        onChange={ (value) => { props.editSearchFilters(value); } }
       />
       <Select 
         data={ optionData }
         map={ optionMap }
-        onChange={ (stuff) => { props.onChange({ offeringTypes: [stuff]}); } }
+        onChange={ (value) => { props.editSearchFilters({ offeringTypes: [value]}); } }
       />
       <input type="submit" value="Find Courses" />
     </form>

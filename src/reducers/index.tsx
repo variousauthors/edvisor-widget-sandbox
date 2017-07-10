@@ -1,29 +1,53 @@
-const initialSearchParameters = {
-	offeringTypes: [],
-	age: {
-		years: 0,
-		range: 'gte',
-	}
+const stateShape = {
+  current: {
+    offeringTypes: [],
+    age: 0,
+    ageRange: 'gte',
+  },
+  next: {
+    offeringTypes: [],
+    age: 0,
+    ageRange: 'gte',
+  }
 }
 
-export function searchParameters(state = initialSearchParameters, { type, filters }) {
+export function searchFilters(state = stateShape, action) {
 
-	switch (type) {
-		case 'SET_SEARCH_FILTERS':
-			let offeringTypes = state.offeringTypes.slice();
-			let age = Object.assign({}, state.age, filters.age);
+  switch (action.type) {
+    case 'EDIT_COURSE_SEARCH_FILTERS':
 
-			if (filters.offeringTypes) {
-				offeringTypes = offeringTypes.concat(filters.offeringTypes);
-			}
+      let next = editCourseSearchFilters(state.next, action)
 
-			return {
-				...state,
-				age,
-				offeringTypes,
-			};
-		default:
-			return state;
+      return {
+        ...state,
+        next,
+      }
 
-	}
+    case 'PUBLISH_COURSE_SEARCH_FILTERS':
+
+      let current = state.next;
+
+      return {
+        ...state,
+        current,
+      }
+    default:
+      return state;
+
+  }
+}
+
+function editCourseSearchFilters(state, action) {
+
+  switch (action.type) {
+    case 'EDIT_COURSE_SEARCH_FILTERS':
+
+      return {
+        ...state,
+        ...action.filters,
+      };
+
+    default:
+      return state;
+  }
 }

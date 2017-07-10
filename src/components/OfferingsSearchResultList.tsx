@@ -55,7 +55,6 @@ function OfferingsSearchResult (props: any) {
 }
 
 export default function OfferingsSearchResultList (props: any) {
-  console.log("ResultList Render");
 
   if (props.isLoading) {
     return (<div>LOADING</div>);
