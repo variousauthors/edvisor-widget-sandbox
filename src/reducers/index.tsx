@@ -5,6 +5,7 @@ const initialFilters = {
   durationTypeId: 3,
   durationAmount: 4,
   durationTypeRange: 'gte',
+  googlePlaceIds: [],
 }
 
 const stateShape = {

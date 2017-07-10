@@ -73,17 +73,33 @@ function Select ({ data, onChange, defaultValue = "", map = (opt) => opt }) {
   )
 }
 
+function LocationFilter (props: any) {
+
+  let optionsMap = ({ id, name }) => {
+    return { value: id, name: name }
+  };
+
+  return (
+    <div>
+      <Select
+        data={ props.locations }
+        map={ optionsMap }
+        onChange={ (value) => props.onChange({ googlePlaceIds: [value] }) }
+      />
+    </div>
+  )
+}
+
 export default function OfferingsSearch (props: any) {
+
+  if (props.error) {
+    return ( <div>Error! {props.error}</div> );
+  }
 
   if (props.isLoading) {
     return ( <div>Loading</div> );
   }
 
-  if (props.error) {
-    return ( <div>Error! {props.error.message}</div> );
-  }
-
-  let optionData = props.results;
   let optionMap = ({ offeringCourseCategoryId, codeName }) => ({
     value: offeringCourseCategoryId,
     name: codeName,
@@ -91,6 +107,10 @@ export default function OfferingsSearch (props: any) {
 
   return (
     <form onSubmit={ (e) => { e.preventDefault(); props.publishSearchFilters(); } } >
+      <LocationFilter 
+        locations={ props.locations }
+        onChange={ (value) => { props.editSearchFilters(value) } }
+      />
       <AgeFilter
         age={ props.age }
         onChange={ (value) => { props.editSearchFilters(value); } }
@@ -98,7 +118,7 @@ export default function OfferingsSearch (props: any) {
       <label>
         <span>Course Type: </span>
         <Select 
-          data={ optionData }
+          data={ props.offeringTypes }
           map={ optionMap }
           onChange={ (value) => { props.editSearchFilters({ offeringTypes: [value]}); } }
         />

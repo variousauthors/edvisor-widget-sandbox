@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import OfferingsSearchResultList from '../components/OfferingsSearchResultList';
 
 let OfferingsSearchResultListWithData = graphql<any, any, any>(gql`
-  query Stuff($offeringTypes: [Int], $durationTypeId: Int, $durationAmount: IntegerRangeInput) {
+  query Stuff($offeringTypes: [Int], $durationTypeId: Int, $durationAmount: IntegerRangeInput, $googlePlaceIds: [String]) {
     offeringSearch(filter:{
       offeringCourseCategoryIds: $offeringTypes,
       durationTypeId: $durationTypeId,
-      durationAmount: $durationAmount
+      durationAmount: $durationAmount,
+      googlePlaceIds: $googlePlaceIds,
     }) {
       startDate
       durationAmount
@@ -38,11 +39,14 @@ let OfferingsSearchResultListWithData = graphql<any, any, any>(gql`
       } : null;
 
 
+      console.log("yup");
+      console.log(filters);
       return { 
         variables: { 
           offeringTypes: filters.offeringTypes,
           durationTypeId: filters.durationTypeId,
           durationAmount: durationAmount,
+          googlePlaceIds: filters.googlePlaceIds,
         } 
       };
     },
