@@ -4,11 +4,14 @@ import { connect } from 'react-redux';
 import OfferingsSearchResultList from '../components/OfferingsSearchResultList';
 
 let OfferingsSearchResultListWithData = graphql<any, any, any>(gql`
-  query Stuff($offeringTypes: [Int]) {
+  query Stuff($offeringTypes: [Int], $durationTypeId: Int, $durationAmount: IntegerRangeInput) {
     offeringSearch(filter:{
-      offeringCourseCategoryIds: $offeringTypes
+      offeringCourseCategoryIds: $offeringTypes,
+      durationTypeId: $durationTypeId,
+      durationAmount: $durationAmount
     }) {
       startDate
+      durationAmount
       durationType {
         codeName
       }
@@ -23,8 +26,19 @@ let OfferingsSearchResultListWithData = graphql<any, any, any>(gql`
     }
   }`, {
     options: (props) => {
+      let filters = props.searchFilters;
+      let durationAmount = (filters.durationTypeRange !== 'any')? {
+        [filters.durationTypeRange]: filters.durationAmount 
+      } : null;
 
-      return { variables: { offeringTypes: props.searchFilters.offeringTypes } };
+
+      return { 
+        variables: { 
+          offeringTypes: filters.offeringTypes,
+          durationTypeId: filters.durationTypeId,
+          durationAmount: durationAmount,
+        } 
+      };
     },
     props: (props) => {
       if (props.data.loading) {
@@ -40,6 +54,7 @@ let OfferingsSearchResultListWithData = graphql<any, any, any>(gql`
         isLoading: props.data.loading,
         results: props.data.offeringSearch.map((searchResult) => {
           return {
+            durationAmount: searchResult.durationAmount,
             durationType: searchResult.durationType.codeName,
             startDate: searchResult.startDate,
             name: searchResult.offering.name,

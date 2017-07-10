@@ -42,7 +42,7 @@ function OfferingsSearchResult (props: any) {
               <div>
                 <div>Course Type: { offering.courseType }</div>
                 <div>Intensity: ???</div>
-                <div>Duration: { offering.durationType }</div>
+                <div>Duration: { offering.durationAmount } x { offering.durationType }</div>
                 <div>Start Date: { offering.startDate }</div>
               </div>
               <div style={ style.info.detailedInfo.prices }></div>

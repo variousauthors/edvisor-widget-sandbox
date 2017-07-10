@@ -56,7 +56,6 @@ function mapDispatchToProps (dispatch: any) {
       dispatch(publishCourseSearchFilters());
     },
     editSearchFilters: (filters) => {
-      console.log(filters);
       dispatch(editCourseSearchFilters(filters));
     },
   };

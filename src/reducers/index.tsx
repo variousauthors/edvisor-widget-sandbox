@@ -3,8 +3,8 @@ const initialFilters = {
   age: 0,
   ageRange: 'lte',
   durationTypeId: 3,
-  durationAmount: 1,
-  durationTypeRange: 'any',
+  durationAmount: 4,
+  durationTypeRange: 'gte',
 }
 
 const stateShape = {

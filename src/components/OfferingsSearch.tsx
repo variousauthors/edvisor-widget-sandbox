@@ -89,8 +89,6 @@ export default function OfferingsSearch (props: any) {
     name: codeName,
   });
 
-  console.log(props);
-
   return (
     <form onSubmit={ (e) => { e.preventDefault(); props.publishSearchFilters(); } } >
       <AgeFilter
