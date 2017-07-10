@@ -33,7 +33,21 @@ let OfferingsSearchWithState = connect<any, any, any>(
 )(OfferingsSearchWithData);
 
 function mapStateToProps (state: any, props) {
-  return { };
+  let current = state.searchFilters.next;
+  let currentFilters = {
+    age: {
+      years: current.age,
+      range: current.ageRange,
+    },
+    duration: {
+      id: current.durationTypeId,
+      range: current.durationTypeRange,
+      amount: current.durationAmount,
+    },
+    offeringTypes: current.offeringTypes,
+  }
+
+  return currentFilters;
 }
 
 function mapDispatchToProps (dispatch: any) {

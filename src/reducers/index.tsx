@@ -1,15 +1,18 @@
-const stateShape = {
-  current: {
-    offeringTypes: [],
-    age: 0,
-    ageRange: 'gte',
-  },
-  next: {
-    offeringTypes: [],
-    age: 0,
-    ageRange: 'gte',
-  }
+const initialFilters = {
+  offeringTypes: [],
+  age: 0,
+  ageRange: 'lte',
+  durationTypeId: 3,
+  durationAmount: 1,
+  durationTypeRange: 'any',
 }
+
+const stateShape = {
+  current: initialFilters,
+  next: initialFilters,
+}
+
+stateShape.next = stateShape.current;
 
 export function searchFilters(state = stateShape, action) {
 
