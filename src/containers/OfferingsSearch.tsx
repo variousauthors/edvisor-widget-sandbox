@@ -20,6 +20,21 @@ let options = {
 }
 
 let OfferingsSearchWithData = graphql<any, any, any>(gql`{
+  agencyCompany {
+    agencyCompanyId
+    connectedSchoolCompanies {
+      schoolCompanyId
+      schools {
+        googlePlace {
+          googlePlaceId
+          countryId
+          translationId
+          translation
+        }
+      }
+
+    }
+  }
   offeringCourseCategories {
     offeringCourseCategoryId
     depth

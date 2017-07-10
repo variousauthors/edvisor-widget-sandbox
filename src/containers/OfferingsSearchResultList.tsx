@@ -22,6 +22,12 @@ let OfferingsSearchResultListWithData = graphql<any, any, any>(gql`
             codeName
           }
         }
+        school {
+          name
+          googlePlace {
+            translation
+          }
+        }
       }
     }
   }`, {
@@ -57,8 +63,16 @@ let OfferingsSearchResultListWithData = graphql<any, any, any>(gql`
             durationAmount: searchResult.durationAmount,
             durationType: searchResult.durationType.codeName,
             startDate: searchResult.startDate,
-            name: searchResult.offering.name,
-            courseType: searchResult.offering.offeringCourse.offeringCourseCategory.codeName,
+
+            offering: {
+              name: searchResult.offering.name,
+              courseType: searchResult.offering.offeringCourse.offeringCourseCategory.codeName,
+
+              school: {
+                name: searchResult.offering.school.name,
+                location: searchResult.offering.school.googlePlace.translation,
+              }
+            }
           }
         })
       }

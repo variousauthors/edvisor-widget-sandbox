@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-function OfferingsSearchResult (props: any) {
-  let offering = props.offering;
+function OfferingsSearchResult ({ searchResult }) {
+  let offering = searchResult.offering;
   let style = {
     container: {
       border: '1px solid blue'
@@ -34,16 +34,16 @@ function OfferingsSearchResult (props: any) {
           <div style={ style.photo }></div>
           <div style={ style.info }>
             <div style={ style.info.generalInfo }>
-              <div>{ props.offering.name }</div>
-              <div>Somewhere...</div>
+              <div>{ searchResult.offering.name }</div>
+              <div>{ offering.school.name } @ { offering.school.location }</div>
             </div>
 
             <div style={ style.info.detailedInfo }>
               <div>
                 <div>Course Type: { offering.courseType }</div>
                 <div>Intensity: ???</div>
-                <div>Duration: { offering.durationAmount } x { offering.durationType }</div>
-                <div>Start Date: { offering.startDate }</div>
+                <div>Duration: { searchResult.durationAmount } x { searchResult.durationType }</div>
+                <div>Start Date: { searchResult.startDate }</div>
               </div>
               <div style={ style.info.detailedInfo.prices }></div>
             </div>
@@ -81,7 +81,7 @@ export default function OfferingsSearchResultList (props: any) {
 
   let results = props.results.map((searchResult: any, index: number) => {
     return (
-      <li key={ index } style={ style.listItem }><OfferingsSearchResult offering={ searchResult }/></li>
+      <li key={ index } style={ style.listItem }><OfferingsSearchResult searchResult={ searchResult }/></li>
     )
   });
 

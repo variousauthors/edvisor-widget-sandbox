@@ -1,53 +1,20 @@
 NEXTSTEPS
 =========
 
-
-OfferingSearchResultFilter from the api
-
-offeringTypeIds: [Int]
- - select with offeringCourseCategories
-
-durationTypeId: Int
- - select with durationTypes
-
-nationalityId: Int
-age: IntegerRangeInput <-- (ask about range in json { gt: 1, lt: 10 } seems not to work)
-schoolIds: [Int]
-offeringCourseCategoryIds: [Int]
-googlePlaceIds: [String]
-startDate: DateRangeInput
-durationAmount: IntegerRangeInput
-currencyId: Int
-limit: Int
-
-{
-  offeringSearch(filter: {
-    nationalityId: 1
-  }) {
-    offeringId
-    offering {
-      name
-    }
-  }
-}
-
-try paginating
-
 [] Student Information:
-   [] Age
+   [x] Age
      - type age into a numerical field
      - then select from, gte, lte, or eq
    [] Nationality
      - BLOCKED can't get list of nationalities
 
-[] Results by: language, post secondary, high school
+[] Results by: post secondary, high school
    - BLOCKED waiting on graphql endpoint for tree data
-   - HOWEVER will manually build Language only
 
 [] Results by: language
    - search by:
-     [] CourseType: offeringTypeIds: drop down of languages
-     [] Duration: at least/any ; n ; durationType
+     [x] CourseType: offeringTypeIds: drop down of languages
+     [x] Duration: at least/any ; n ; durationType
      [] Start Date: DateRangeInput
 
 [x] display list of results
@@ -58,6 +25,12 @@ try paginating
      - start date
      - what is intensity? derived from duration?
      - maybe promotions
+
+[x] Add location to school:
+   - school.name @ school.googleplace.translation
+
+[] search by googleplaces
+   - fetch all the school places associated with the agency
 
 ## TIMELINE ##
 
@@ -70,6 +43,7 @@ try paginating
 + add Apollo
 + make queries against the api
 - add React-Router
+- typescript deep-dive
 
 ### Questions ###
 
