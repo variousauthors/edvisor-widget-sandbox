@@ -31,9 +31,12 @@ let OfferingsSearchResultListWithData = graphql<any, any, any>(gql`
         return { isLoading: true };
       }
 
+      if (props.data.error) {
+        return { error: props.data.error.message };
+      }
+
       return {
         networkStatus: props.data.networkStatus,
-        error: props.data.error ? props.data.error.message : null,
         isLoading: props.data.loading,
         results: props.data.offeringSearch.map((searchResult) => {
           return {
