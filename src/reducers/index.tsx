@@ -1,10 +1,10 @@
 const initialFilters = {
   offeringTypes: [],
-  age: 0,
-  ageRange: 'lte',
+  age: 10,
+  ageRange: 'gte',
   durationTypeId: 3,
   durationAmount: 4,
-  durationTypeRange: 'gte',
+  durationTypeRange: 'any',
   googlePlaceIds: [],
 }
 

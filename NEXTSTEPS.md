@@ -29,8 +29,11 @@ NEXTSTEPS
 [x] Add location to school:
    - school.name @ school.googleplace.translation
 
-[] search by googleplaces
+[x] search by googleplaces
    - fetch all the school places associated with the agency
+
+[] fetch duration types for search form
+[] turn offeringCourseCategories into a tree
 
 ## TIMELINE ##
 

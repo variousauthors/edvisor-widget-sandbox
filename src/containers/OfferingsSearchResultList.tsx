@@ -32,15 +32,16 @@ let OfferingsSearchResultListWithData = graphql<any, any, any>(gql`
       }
     }
   }`, {
+    skip: ({ searchFilters }) => {
+
+      return searchFilters.googlePlaceIds.length === 0;
+    },
     options: (props) => {
       let filters = props.searchFilters;
       let durationAmount = (filters.durationTypeRange !== 'any')? {
         [filters.durationTypeRange]: filters.durationAmount 
       } : null;
 
-
-      console.log("yup");
-      console.log(filters);
       return { 
         variables: { 
           offeringTypes: filters.offeringTypes,

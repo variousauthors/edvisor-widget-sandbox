@@ -31,13 +31,28 @@ let options = {
 
       return memo;
     }, { locations: [], aset: {} }).locations;
+    // TODO this seems to run a bunch, eh?
+
+    let offeringTypes = props.data.offeringCourseCategories.reduce((memo, category) => {
+      if (category.depth < 2) {
+        return memo;
+      }
+
+      memo.push({
+        id: category.offeringCourseCategoryId,
+        name: category.codeName
+      })
+
+      return memo;
+    }, [])
 
     return {
       networkStatus: props.data.networkStatus,
       error: props.data.error ? props.data.error.message : null,
       isLoading: props.data.loading,
-      offeringTypes: props.data.offeringCourseCategories.filter((category) => (category.depth > 1)),
+      offeringTypes: offeringTypes,
       locations: locations.sort((a, b) => { return a.name.localeCompare(b.name); }), // alphabetize,
+      durationTypes: props.data.durationTypes.map((d) => { return { id: d.durationTypeId, name: d.codeName } }),
     }
   }
 }
@@ -59,6 +74,10 @@ let OfferingsSearchWithData = graphql<any, any, any>(gql`{
   offeringCourseCategories {
     offeringCourseCategoryId
     depth
+    codeName
+  }
+  durationTypes {
+    durationTypeId
     codeName
   }
 }`, options)(OfferingsSearch);
@@ -93,6 +112,7 @@ function mapDispatchToProps (dispatch: any) {
       dispatch(publishCourseSearchFilters());
     },
     editSearchFilters: (filters) => {
+      console.log(filters);
       dispatch(editCourseSearchFilters(filters));
     },
   };

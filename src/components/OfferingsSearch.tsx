@@ -1,22 +1,39 @@
 import * as React from 'react';
 
-function DurationFilter (props: any) {
+import IntegerRangeInput from './IntegerRangeInput';
+import Select from './Select';
 
-  // TODO fetch these
-  let durationTypeOptions = [
-    { value: '3', name: 'Weeks' },
-    { value: '5', name: 'Years' },
-  ];
+function AgeFilter ({ age={ years: "0", range: "lte" }, onChange }) {
+
+  let boundsOptions = [
+    { value: 'gte', name: "and older" },
+    { value: 'lte', name: "and younger" },
+    { value: 'eq', name: "exactly" },
+  ]
+
+  return (
+    <IntegerRangeInput 
+      initialValue={ age.years }
+      initialBounds={ age.range }
+      vocab={ { value: "age", bounds: "ageRange" } }
+      boundsOptions={ boundsOptions } 
+      onChange={ (value) => { onChange(value) } } 
+    />
+  )
+}
+
+function DurationFilter ({ duration, durationTypes, onChange }) {
+  console.log(duration);
 
   let rangeOptions = [
     { value: 'any', name: "any" },
     { value: 'gte', name: "at least" },
   ]
 
-  let durationTypeDetails = (props.duration.range === 'any')? null : (
+  let durationTypeDetails = (duration.range !== 'gte')? null : (
     <span>
-      <input type='number' min='0' step='1' value={ props.duration.amount } onChange={ (e) => props.onChange({ durationAmount: e.target.value }) } />
-      <Select defaultValue={ props.duration.id } data={ durationTypeOptions } onChange={ (value) => props.onChange({ durationTypeId: value }) } />
+      <input type='number' min='0' step='1' value={ duration.amount } onChange={ (e) => onChange({ durationAmount: e.target.value }) } />
+      <Select defaultValue={ duration.id } data={ durationTypes } valueKey="id" onChange={ (value) => onChange({ durationTypeId: value }) } />
     </span>
   );
 
@@ -24,9 +41,9 @@ function DurationFilter (props: any) {
     <div>
       <label>Duration:
         <Select 
-          defaultValue={ props.duration.range }
+          defaultValue={ duration.range }
           data={ rangeOptions } 
-          onChange={ (value) => props.onChange({ durationTypeRange: value }) } />
+          onChange={ (value) => onChange({ durationTypeRange: value }) } />
 
         { durationTypeDetails }
       </label>
@@ -34,59 +51,31 @@ function DurationFilter (props: any) {
   )
 }
 
-function AgeFilter (props: any) {
-  let rangeOptions = [
-    { value: 'gte', name: "and older" },
-    { value: 'lte', name: "and younger" },
-    { value: 'eq', name: "exactly" },
-  ]
+function LocationFilter ({ location = "Select a Location", locations, onChange }) {
 
   return (
-    <div>
-      <label>Age: </label>
-      <input 
-        type='number' 
-        min='0'
-        step='1'
-        value={ props.age.years }
-        onChange={ (e) => props.onChange({ age: e.target.value })  }/>
-      <Select defaultValue={ props.age.range } data={ rangeOptions } onChange={ (value) => props.onChange({ ageRange: value }) } />
-    </div>
-  );
-}
-
-function Select ({ data, onChange, defaultValue = "", map = (opt) => opt }) {
-  let optionElements = data.map((opt: any, index: number) => {
-    if (map) {
-      opt = map(opt);
-    }
-
-    return (
-      <option key={ index } value={ opt.value } >{ opt.name }</option>
-    )
-  })
-
-  return (
-    <select defaultValue={ defaultValue } onChange={ (e) => { onChange(e.target.value); } }>
-      { optionElements }
-    </select>
+      <Select
+        data={ locations }
+        valueKey = "id"
+        defaultText="Select a Location"
+        defaultValue=""
+        onChange={ (value) => onChange({ googlePlaceIds: [value] }) }
+      />
   )
 }
 
-function LocationFilter (props: any) {
-
-  let optionsMap = ({ id, name }) => {
-    return { value: id, name: name }
-  };
+function CourseTypeFilter ({ offeringTypes, onChange }) {
 
   return (
-    <div>
-      <Select
-        data={ props.locations }
-        map={ optionsMap }
-        onChange={ (value) => props.onChange({ googlePlaceIds: [value] }) }
+    <label>
+      <span>Course Type: </span>
+      <Select 
+        data={ offeringTypes }
+        valueKey = "id"
+        defaultText = "Select a Course Type"
+        onChange={ (value) => { onChange({ offeringTypes: [value]}); } }
       />
-    </div>
+    </label>
   )
 }
 
@@ -100,31 +89,18 @@ export default function OfferingsSearch (props: any) {
     return ( <div>Loading</div> );
   }
 
-  let optionMap = ({ offeringCourseCategoryId, codeName }) => ({
-    value: offeringCourseCategoryId,
-    name: codeName,
-  });
+  let setFilter = (value) => props.editSearchFilters(value);
 
   return (
     <form onSubmit={ (e) => { e.preventDefault(); props.publishSearchFilters(); } } >
       <LocationFilter 
-        locations={ props.locations }
-        onChange={ (value) => { props.editSearchFilters(value) } }
-      />
-      <AgeFilter
-        age={ props.age }
-        onChange={ (value) => { props.editSearchFilters(value); } }
-      />
-      <label>
-        <span>Course Type: </span>
-        <Select 
-          data={ props.offeringTypes }
-          map={ optionMap }
-          onChange={ (value) => { props.editSearchFilters({ offeringTypes: [value]}); } }
-        />
-      </label>
+        locations={ props.locations } 
+        onChange={ setFilter } />
+      <AgeFilter age={ props.age } onChange={ setFilter } />
+      <CourseTypeFilter offeringTypes={ props.offeringTypes } onChange={ setFilter } />
       <DurationFilter 
         duration={ props.duration }
+        durationTypes={ props.durationTypes }
         onChange={ (value) => { props.editSearchFilters(value) } }
        />
       <div>
@@ -133,3 +109,4 @@ export default function OfferingsSearch (props: any) {
     </form>
   )
 }
+
