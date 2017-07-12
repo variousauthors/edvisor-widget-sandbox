@@ -14,7 +14,7 @@ const stateShape = {
 }
 
 const UIStateShape = {
-  tabName: "LANGUAGES",
+  tab: "0",
 }
 
 stateShape.next = stateShape.current;

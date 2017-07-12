@@ -50,7 +50,7 @@ function mapApolloToProps (apollo) {
 function mapStateToProps (state: any, props) { 
 
   return {
-    currentTab: state.ui.tabName,
+    tabIndex: state.ui.tab,
   };
 }
 
@@ -59,8 +59,8 @@ function mapDispatchToProps (dispatch: any) {
     publishSearchFilters: () => {
       dispatch(publishCourseSearchFilters());
     },
-    switchTabs: (tabName) => {
-      dispatch(switchTabs(tabName));
+    switchTabs: (tab) => {
+      dispatch(switchTabs(tab));
     }
   };
 }

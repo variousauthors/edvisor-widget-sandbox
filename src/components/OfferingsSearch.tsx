@@ -4,24 +4,16 @@ import './OfferingsSearch.css';
 import FieldsForStudentInformation from '../containers/FieldsForStudentInformation';
 import FieldsForLanguageCourses from '../containers/FieldsForLanguageCourses';
 
-function showCurrentTab (tab) {
-  switch (tab) {
-    case "LANGUAGES": {
-      return (<FieldsForLanguageCourses />);
-    }
-    case "POST_SECONDARY": {
-      return (<div>Post Secondary</div>);
-    }
-    case "HIGHSCHOOL": {
-      return (<div>Highschool</div>);
-    }
-    default: {
-      return (<div>HELLO</div>);
-    }
-  }
+function ModalComponents ({ children, mode }) {
+
+  return (
+    <div>
+      { children[mode] }
+    </div>
+  );
 }
 
-export default function OfferingsSearch ({ currentTab, offeringTypeCategories, publishSearchFilters, switchTabs }) {
+export default function OfferingsSearch ({ tabIndex, offeringTypeCategories, publishSearchFilters, switchTabs }) {
 
   const clickHandler = (e) => { switchTabs((e.target as HTMLButtonElement).value) };
 
@@ -30,13 +22,15 @@ export default function OfferingsSearch ({ currentTab, offeringTypeCategories, p
       <FieldsForStudentInformation />
       <div>
         <div>
-          <button value="LANGUAGES" onClick={ clickHandler }>Languages</button>
-          <button value="POST_SECONDARY" onClick={ clickHandler }>Post Secondary</button>
-          <button value="HIGHSCHOOL" onClick={ clickHandler }>Highschool</button>
+          <button value="0" onClick={ clickHandler }>Languages</button>
+          <button value="1" onClick={ clickHandler }>Post Secondary</button>
+          <button value="2" onClick={ clickHandler }>Highschool</button>
         </div>
-        <div>
-          { showCurrentTab(currentTab) }
-        </div>
+        <ModalComponents mode={ tabIndex }>
+          <FieldsForLanguageCourses/>
+          <div>Post Secondary</div>
+          <div>Highschool</div>
+        </ModalComponents>
       </div>
       <div>
         <input type="submit" value="Find Courses" />

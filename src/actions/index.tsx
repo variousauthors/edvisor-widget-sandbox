@@ -1,8 +1,8 @@
-export function switchTabs (tabName) {
+export function switchTabs (tab) {
 
 	return { 
 		type: "SWITCH_TABS",
-		tabName,
+		tab,
  	}
 }
 
