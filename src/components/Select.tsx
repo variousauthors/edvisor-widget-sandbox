@@ -19,6 +19,7 @@ export default function Select ({ data, onChange, defaultText = "", defaultValue
   })
 
   if (defaultText !== "") {
+    defaultValue = "-1";
     optionElements.unshift((
       <option key={ optionElements.length } value={ defaultValue } >{ defaultText }</option>
     ))

@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Select /> renders 1`] = `
+<select
+  defaultValue={undefined}
+  onChange={[Function]}
+>
+  <option
+    value="1"
+  >
+    a
+  </option>
+  <option
+    value="2"
+  >
+    b
+  </option>
+</select>
+`;
+
+exports[`<Select /> renders 1 additinal <option/> tag when defaultText is given 1`] = `
+<select
+  defaultValue="-1"
+  onChange={[Function]}
+>
+  <option
+    value="-1"
+  >
+    Default Option
+  </option>
+  <option
+    value="1"
+  >
+    a
+  </option>
+  <option
+    value="2"
+  >
+    b
+  </option>
+</select>
+`;
