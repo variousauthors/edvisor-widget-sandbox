@@ -1,15 +1,15 @@
 import * as React from 'react';
-import Select from './Select'
+import Select from './Select';
 
 interface IntegerRangeInputProps {
-  initialValue?: string,
-  initialBounds?: string,
   boundsOptions: { value: string, name: string }[],
   onChange: (value: any) => void,
+  initialValue?: string,
+  initialBounds?: string,
   vocab?: { value: string, bounds: string },
 }
 
-export default function IntegerRangeInput ({ initialValue = "", initialBounds = undefined, boundsOptions, onChange, vocab={ value: "value", bounds: "bounds" } }: IntegerRangeInputProps) {
+export default function IntegerRangeInput ({ boundsOptions, onChange, initialValue = "", initialBounds = undefined, vocab={ value: "value", bounds: "bounds" } }: IntegerRangeInputProps) {
 
   return (
     <div>

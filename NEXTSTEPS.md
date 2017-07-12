@@ -1,7 +1,18 @@
 NEXTSTEPS
 =========
 
+[] all these components that share the same onChange...
+   - find a way for the form to pass onChange to all its children
+     through context so that they can use it without declaring it
+
+[] build the tabs for Language, Post Secondary, and High School
+   - parent component for Search, which fetches less data
+   - get the top-level categories in search
+   - build components to show conditionally for each category
+     - each is responsible for fetching its data
+
 [] Student Information:
+   [] break this out into a separate component, responsible for its data
    [x] Age
      - type age into a numerical field
      - then select from, gte, lte, or eq
@@ -32,8 +43,9 @@ NEXTSTEPS
 [x] search by googleplaces
    - fetch all the school places associated with the agency
 
-[] fetch duration types for search form
+[x] fetch duration types for search form
 [] turn offeringCourseCategories into a tree
+
 
 ## TIMELINE ##
 

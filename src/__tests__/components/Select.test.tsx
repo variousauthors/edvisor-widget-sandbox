@@ -1,8 +1,8 @@
-import * as React from 'react'
-import * as renderer from 'react-test-renderer'
-import { shallow } from 'enzyme'
+import * as React from 'react';
+import * as renderer from 'react-test-renderer';
+import { shallow } from 'enzyme';
 
-import Select from '../../components/Select'
+import Select from '../../components/Select';
 
 let nothing = (value) => {};
 let options = [
@@ -36,8 +36,8 @@ describe('<Select />', () => {
 
   it('uses valueKey and valueName to create options from the given data', () => {
     let weirdOptions = [
-      { bob: 1, jill: "a", wat: 3 }
-      { bob: 2, jill: "b", wat: 3 }
+      { bob: 1, jill: "a", wat: 3 },
+      { bob: 2, jill: "b", wat: 3 },
     ];
 
     const wrapper = shallow(<Select valueKey="bob" nameKey="jill" data={ weirdOptions } onChange={ nothing } />);
@@ -46,5 +46,12 @@ describe('<Select />', () => {
     expect(wrapper.find('option').first().text()).toBe("a");
   });
 
+  it('it correctly announces changed values', ()=> {
+
+    let onChange = (value) => { expect(value).toBe(1) };
+    const wrapper = shallow(<Select data={ options } onChange={ onChange } />);
+
+    wrapper.simulate('change', { target: { value: 1 } });
+  });
 })
 
