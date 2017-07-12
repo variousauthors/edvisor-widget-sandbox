@@ -14,7 +14,16 @@ const stateShape = {
 }
 
 const UIStateShape = {
-  tab: "0",
+  tabGroups: {
+    offeringSearch: { 
+      id: "offeringSearch",
+      tabIndex: 0,
+    },
+    fieldsForLanguageCourses: { 
+      id: "fieldsForLanguageCourses",
+      tabIndex: 0,
+    },
+  }
 }
 
 stateShape.next = stateShape.current;
@@ -60,15 +69,56 @@ function editCourseSearchFilters(state, action) {
   }
 }
 
-export function ui (state = UIStateShape, action) {
+interface TabGroup {
+  id: string,
+  tabIndex: number,
+}
+function tabGroup (state: TabGroup, action) {
 
   switch (action.type) {
-    case 'SWITCH_TABS':
+    case 'SWITCH_TABS': {
+      if (state.id !== action.id) {
+        return state;
+      }
 
       return {
         ...state,
-        ...action,
-      };
+        tabIndex: action.tabIndex,
+      }
+    }
+
+    default:
+      return state;
+  }
+}
+
+function tabGroups (state = {}, action) {
+
+  switch (action.type) {
+    case 'SWITCH_TABS': {
+
+      return Object.keys(state).reduce((memo, id) => {
+        memo[id] = tabGroup(state[id], action);
+
+        return memo;
+      }, {})
+    }
+
+    default:
+      return state;
+  }
+}
+
+export function ui (state = UIStateShape, action) {
+
+  switch (action.type) {
+    case 'SWITCH_TABS': {
+      
+      return {
+        ...state,
+        tabGroups: tabGroups(state.tabGroups, action),
+      }
+    }
 
     default:
       return state;

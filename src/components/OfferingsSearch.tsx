@@ -3,15 +3,7 @@ import * as React from 'react';
 import './OfferingsSearch.css';
 import FieldsForStudentInformation from '../containers/FieldsForStudentInformation';
 import FieldsForLanguageCourses from '../containers/FieldsForLanguageCourses';
-
-function ModalComponents ({ children, mode }) {
-
-  return (
-    <div>
-      { children[mode] }
-    </div>
-  );
-}
+import ModalComponents from './ModalComponents';
 
 export default function OfferingsSearch ({ tabIndex, offeringTypeCategories, publishSearchFilters, switchTabs }) {
 
@@ -28,8 +20,16 @@ export default function OfferingsSearch ({ tabIndex, offeringTypeCategories, pub
         </div>
         <ModalComponents mode={ tabIndex }>
           <FieldsForLanguageCourses/>
-          <div>Post Secondary</div>
-          <div>Highschool</div>
+          <div>
+            <fieldset>
+              <legend>Post Secondary</legend>
+            </fieldset>
+          </div>
+          <div>
+            <fieldset>
+              <legend>Highschool</legend>
+            </fieldset>
+          </div>
         </ModalComponents>
       </div>
       <div>

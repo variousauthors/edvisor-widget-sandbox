@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import Select from './Select';
+import ModalComponents from './ModalComponents';
 
 function DurationFilter ({ duration, durationTypes, onChange }) {
 
@@ -61,19 +62,11 @@ function CourseTypeFilter ({ offeringTypes, onChange }) {
     </div>
   )
 }
-export default function FieldsForLanguageCourses ({ locations, offeringTypes, duration, durationTypes, editSearchFilters, error, isLoading }) {
 
-  if (error) {
-    return ( <div>Error! {error}</div> );
-  }
-
-  if (isLoading) {
-    return ( <div>Loading</div> );
-  }
+function FieldsForLanguageCoursesByLocation ({ locations, offeringTypes, duration, durationTypes, editSearchFilters, error, isLoading }) {
 
   return (
-    <fieldset>
-      <legend>Language Courses</legend>
+    <div>
       <LocationFilter 
         locations={ locations } 
         onChange={ editSearchFilters } />
@@ -84,6 +77,50 @@ export default function FieldsForLanguageCourses ({ locations, offeringTypes, du
         duration={ duration }
         durationTypes={ durationTypes }
         onChange={ editSearchFilters } />
-    </fieldset>
+    </div>
+  );
+}
+
+function FieldsForLanguageCoursesBySchool () {
+
+  return (
+    <div>HELLO</div>
+  )
+}
+
+export default function FieldsForLanguageCourses ({ tabIndex, locations, offeringTypes, duration, durationTypes, editSearchFilters, switchTabs, error, isLoading }) {
+
+  if (error) {
+    return ( <div>Error! {error}</div> );
+  }
+
+  if (isLoading) {
+    return ( <div>Loading</div> );
+  }
+
+  const clickHandler = (e) => { switchTabs((e.target as HTMLButtonElement).value) };
+
+  return (
+    <div>
+      <fieldset>
+        <legend>Language Courses</legend>
+        <div>
+          <button value="0" onClick={ clickHandler }>By Location</button>
+          <button value="1" onClick={ clickHandler }>By School</button>
+        </div>
+        <ModalComponents mode={ tabIndex }>
+          <FieldsForLanguageCoursesByLocation 
+            locations={ locations }
+            error={ error }
+            isLoading={ isLoading }
+            offeringTypes={ offeringTypes }
+            duration={ duration }
+            durationTypes={ durationTypes }
+            editSearchFilters={ editSearchFilters }
+          />
+          <FieldsForLanguageCoursesBySchool/>
+        </ModalComponents>
+      </fieldset>
+    </div>
   )
 }

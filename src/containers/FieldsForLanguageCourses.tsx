@@ -1,7 +1,7 @@
 import { graphql, gql } from 'react-apollo';
 import { connect } from 'react-redux';
 
-import { editCourseSearchFilters } from '../actions/index';
+import { editCourseSearchFilters, switchTabs } from '../actions/index';
 import Base from '../components/FieldsForLanguageCourses';
 
 const options = {
@@ -37,6 +37,7 @@ function mapStateToProps (state: any, props) {
   const filters = state.searchFilters.next;
 
   return {
+    tabIndex: state.ui.tabGroups.fieldsForLanguageCourses.tabIndex,
     duration: {
       id: filters.durationTypeId,
       range: filters.durationTypeRange,
@@ -103,6 +104,11 @@ function mapDispatchToProps (dispatch: any) {
       console.log("editSearchFilters: ");
       console.log(filters);
       dispatch(editCourseSearchFilters(filters));
+    },
+    switchTabs: (tabIndex) => {
+      console.log("switchTabs: ");
+      console.log(tabIndex);
+      dispatch(switchTabs("fieldsForLanguageCourses", tabIndex));
     },
   };
 }

@@ -50,7 +50,7 @@ function mapApolloToProps (apollo) {
 function mapStateToProps (state: any, props) { 
 
   return {
-    tabIndex: state.ui.tab,
+    tabIndex: state.ui.tabGroups.offeringSearch.tabIndex,
   };
 }
 
@@ -59,8 +59,10 @@ function mapDispatchToProps (dispatch: any) {
     publishSearchFilters: () => {
       dispatch(publishCourseSearchFilters());
     },
-    switchTabs: (tab) => {
-      dispatch(switchTabs(tab));
+    switchTabs: (tabIndex) => {
+      console.log("switchTabs: ");
+      console.log(tabIndex);
+      dispatch(switchTabs("offeringSearch", tabIndex));
     }
   };
 }
