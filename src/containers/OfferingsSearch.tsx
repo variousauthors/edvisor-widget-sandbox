@@ -91,10 +91,6 @@ function mapStateToProps (state: any, props) {
   let current = state.searchFilters.next;
 
   let currentFilters = {
-    age: {
-      years: current.age,
-      range: current.ageRange,
-    },
     duration: {
       id: current.durationTypeId,
       range: current.durationTypeRange,
@@ -112,6 +108,7 @@ function mapDispatchToProps (dispatch: any) {
       dispatch(publishCourseSearchFilters());
     },
     editSearchFilters: (filters) => {
+      console.log("editSearchFilters: ");
       console.log(filters);
       dispatch(editCourseSearchFilters(filters));
     },

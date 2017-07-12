@@ -27,20 +27,29 @@ function NationalityFilter ({ countries, onChange }) {
   return (
     <Select
       data={ countries }
-      valueKey = "id"
+      valueKey = "countryId"
+      nameKey = "nameTranslation"
       defaultValue=""
       onChange={ (value) => onChange({ nationalityId: value }) }
     />
   )
 }
 
-export default function FieldsForStudentInformation ({ age, onChange }) {
+export default function FieldsForStudentInformation ({ age, countries, editSearchFilters, error, isLoading, }) {
+
+  if (error) {
+    return ( <div>Error! {error}</div> );
+  }
+
+  if (isLoading) {
+    return ( <div>Loading</div> );
+  }
 
   return (
     <fieldset>
       <legend>Student Information</legend>
-      <NationalityFilter countries={ [] } onChange={ onChange } />
-      <AgeFilter age={ age } onChange={ onChange } />
+      <NationalityFilter countries={ countries } onChange={ editSearchFilters } />
+      <AgeFilter age={ age } onChange={ editSearchFilters } />
     </fieldset>
   )
 }

@@ -3,7 +3,6 @@ import * as React from 'react';
 import Select from './Select';
 
 function DurationFilter ({ duration, durationTypes, onChange }) {
-  console.log(duration);
 
   let rangeOptions = [
     { value: 'any', name: "any" },

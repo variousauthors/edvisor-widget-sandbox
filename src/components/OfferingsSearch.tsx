@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import FieldsForStudentInformation from './FieldsForStudentInformation';
+import FieldsForStudentInformation from '../containers/FieldsForStudentInformation';
 import FieldsForLanguageCourses from './FieldsForLanguageCourses';
 
 export default function OfferingsSearch (props: any) {
@@ -17,9 +17,7 @@ export default function OfferingsSearch (props: any) {
 
   return (
     <form onSubmit={ (e) => { e.preventDefault(); props.publishSearchFilters(); } } >
-      <FieldsForStudentInformation 
-        age={ props.age } 
-        onChange={ setFilter }  />
+      <FieldsForStudentInformation />
       <FieldsForLanguageCourses 
         locations={ props.locations } 
         offeringTypes={ props.offeringTypes } 
