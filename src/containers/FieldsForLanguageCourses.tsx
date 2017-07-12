@@ -106,9 +106,8 @@ function mapDispatchToProps (dispatch: any) {
     },
   };
 }
-const bob = graphql<any, any, any>(query, options)(Base)
 
 export default connect<any, any, any>(
   mapStateToProps,
   mapDispatchToProps,
-)(bob);
+)(graphql<any, any, any>(query, options)(Base));

@@ -13,6 +13,10 @@ const stateShape = {
   next: initialFilters,
 }
 
+const UIStateShape = {
+  tabName: "LANGUAGES",
+}
+
 stateShape.next = stateShape.current;
 
 export function searchFilters(state = stateShape, action) {
@@ -49,6 +53,21 @@ function editCourseSearchFilters(state, action) {
       return {
         ...state,
         ...action.filters,
+      };
+
+    default:
+      return state;
+  }
+}
+
+export function ui (state = UIStateShape, action) {
+
+  switch (action.type) {
+    case 'SWITCH_TABS':
+
+      return {
+        ...state,
+        ...action,
       };
 
     default:

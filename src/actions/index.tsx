@@ -1,3 +1,10 @@
+export function switchTabs (tabName) {
+
+	return { 
+		type: "SWITCH_TABS",
+		tabName,
+ 	}
+}
 
 export function editCourseSearchFilters (filters) {
 

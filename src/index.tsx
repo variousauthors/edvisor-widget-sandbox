@@ -5,7 +5,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { ApolloClient, createNetworkInterface, ApolloProvider } from 'react-apollo';
 
 import App from './containers/App';
-import { searchFilters } from './reducers/index';
+import { searchFilters, ui } from './reducers/index';
 
 let networkInterface = createNetworkInterface({
     uri: 'http://127.0.0.1:5000/graphql',
@@ -29,6 +29,7 @@ let client = new ApolloClient({
 const store = createStore(
   combineReducers({
     searchFilters,
+    ui,
     apollo: client.reducer(),
   }),
   {},
