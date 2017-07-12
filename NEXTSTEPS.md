@@ -5,22 +5,21 @@ NEXTSTEPS
    - find a way for the form to pass onChange to all its children
      through context so that they can use it without declaring it
 
-[] build the tabs for Language, Post Secondary, and High School
-   - parent component for Search, which fetches less data
-   - get the top-level categories in search
-   - build components to show conditionally for each category
-     - each is responsible for fetching its data
+[ ] build the tabs for Language, Post Secondary, and High School
+    [x] parent component for Search, which fetches less data
+    [x] get the top-level categories in search
+    [x] build components to show conditionally for each category
+        [ ] each is responsible for fetching its data
 
-[] Student Information:
-   [] break this out into a separate component, responsible for its data
+[x] Student Information:
+   [x] break this out into a separate component, responsible for its data
    [x] Age
      - type age into a numerical field
      - then select from, gte, lte, or eq
-   [] Nationality
-     - BLOCKED can't get list of nationalities
+   [x] Nationality
+     - get list of nationalities
 
 [] Results by: post secondary, high school
-   - BLOCKED waiting on graphql endpoint for tree data
 
 [] Results by: language
    - search by:
@@ -44,6 +43,7 @@ NEXTSTEPS
    - fetch all the school places associated with the agency
 
 [x] fetch duration types for search form
+
 [] turn offeringCourseCategories into a tree
 
 
@@ -78,4 +78,18 @@ NEXTSTEPS
  - our queries do not return an id field so Apollo may have trouble caching them
    - see: http://dev.apollodata.com/react/cache-updates.html#normalization
    - Pavol was getting caching I think tho, so who knows!?
+
+#### UI State ####
+
+A tab group component might only need "tabIndex" from its parent. However,
+I have gone to a bunch of trouble to store the tabIndex in the ui state
+so that the tabs tabIndex can be changed from anywhere in the app. All
+so that I don't have to type "class" anywhere. heh. heh. hehhhhhh.
+
+In order to add a new tab group:
+
+1. add it to the ui state shape
+2. dispatch a switchTabs action with the name of the tabGroup and the tabIndex
+
+That's not so bad really... Hmm...
 

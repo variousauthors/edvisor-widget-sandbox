@@ -3,8 +3,8 @@ import * as React from 'react';
 import Select from './Select';
 import ModalComponents from './ModalComponents';
 
-function DurationFilter ({ duration, durationTypes, onChange }) {
-
+function DurationFilter (props: any) {
+  const { duration, durationTypes, onChange } = props;
   let rangeOptions = [
     { value: 'any', name: "any" },
     { value: 'gte', name: "at least" },
@@ -31,14 +31,15 @@ function DurationFilter ({ duration, durationTypes, onChange }) {
   )
 }
 
-function LocationFilter ({ location = "Select a Location", locations, onChange }) {
+function LocationFilter (props: any) {
+  const { location = "Select a Location", locations, onChange } = props;
 
   return (
     <div>
       <Select
         data={ locations }
         valueKey = "id"
-        defaultText="Select a Location"
+        defaultText={ location }
         defaultValue=""
         onChange={ (value) => onChange({ googlePlaceIds: [value] }) }
       />
@@ -46,7 +47,8 @@ function LocationFilter ({ location = "Select a Location", locations, onChange }
   )
 }
 
-function CourseTypeFilter ({ offeringTypes, onChange }) {
+function CourseTypeFilter (props: any) {
+  const { offeringTypes, onChange } = props;
 
   return (
     <div>
@@ -63,7 +65,15 @@ function CourseTypeFilter ({ offeringTypes, onChange }) {
   )
 }
 
-function FieldsForLanguageCoursesByLocation ({ locations, offeringTypes, duration, durationTypes, editSearchFilters, error, isLoading }) {
+interface FieldsForLanguageCoursesByLocationProps {
+  locations: any,
+  offeringTypes: any,
+  duration: any,
+  durationTypes: any,
+  editSearchFilters: any,
+}
+function FieldsForLanguageCoursesByLocation (props: FieldsForLanguageCoursesByLocationProps) {
+  const { locations, offeringTypes, duration, durationTypes, editSearchFilters } = props;
 
   return (
     <div>
@@ -88,7 +98,7 @@ function FieldsForLanguageCoursesBySchool () {
   )
 }
 
-export default function FieldsForLanguageCourses ({ tabIndex, locations, offeringTypes, duration, durationTypes, editSearchFilters, switchTabs, error, isLoading }) {
+export default function FieldsForLanguageCourses ({ tabIndex, switchTabs, error, isLoading, ...props }) {
 
   if (error) {
     return ( <div>Error! {error}</div> );
@@ -109,15 +119,7 @@ export default function FieldsForLanguageCourses ({ tabIndex, locations, offerin
           <button value="1" onClick={ clickHandler }>By School</button>
         </div>
         <ModalComponents mode={ tabIndex }>
-          <FieldsForLanguageCoursesByLocation 
-            locations={ locations }
-            error={ error }
-            isLoading={ isLoading }
-            offeringTypes={ offeringTypes }
-            duration={ duration }
-            durationTypes={ durationTypes }
-            editSearchFilters={ editSearchFilters }
-          />
+          <FieldsForLanguageCoursesByLocation { ...props as FieldsForLanguageCoursesByLocationProps } />
           <FieldsForLanguageCoursesBySchool/>
         </ModalComponents>
       </fieldset>
