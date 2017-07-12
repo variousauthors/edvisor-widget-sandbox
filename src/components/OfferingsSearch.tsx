@@ -1,29 +1,14 @@
 import * as React from 'react';
 
 import FieldsForStudentInformation from '../containers/FieldsForStudentInformation';
-import FieldsForLanguageCourses from './FieldsForLanguageCourses';
+import FieldsForLanguageCourses from '../containers/FieldsForLanguageCourses';
 
-export default function OfferingsSearch (props: any) {
-
-  if (props.error) {
-    return ( <div>Error! {props.error}</div> );
-  }
-
-  if (props.isLoading) {
-    return ( <div>Loading</div> );
-  }
-
-  let setFilter = (value) => props.editSearchFilters(value);
+export default function OfferingsSearch ({ publishSearchFilters }) {
 
   return (
-    <form onSubmit={ (e) => { e.preventDefault(); props.publishSearchFilters(); } } >
+    <form onSubmit={ (e) => { e.preventDefault(); publishSearchFilters(); } } >
       <FieldsForStudentInformation />
-      <FieldsForLanguageCourses 
-        locations={ props.locations } 
-        offeringTypes={ props.offeringTypes } 
-        duration={ props.duration }
-        durationTypes={ props.durationTypes }
-        onChange={ setFilter } />
+      <FieldsForLanguageCourses />
       <div>
         <input type="submit" value="Find Courses" />
       </div>

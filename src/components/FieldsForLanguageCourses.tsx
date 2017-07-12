@@ -61,21 +61,29 @@ function CourseTypeFilter ({ offeringTypes, onChange }) {
     </div>
   )
 }
-export default function FieldsForLanguageCourses ({ locations, offeringTypes, duration, durationTypes, onChange }) {
+export default function FieldsForLanguageCourses ({ locations, offeringTypes, duration, durationTypes, editSearchFilters, error, isLoading }) {
+
+  if (error) {
+    return ( <div>Error! {error}</div> );
+  }
+
+  if (isLoading) {
+    return ( <div>Loading</div> );
+  }
 
   return (
     <fieldset>
       <legend>Language Courses</legend>
       <LocationFilter 
         locations={ locations } 
-        onChange={ onChange } />
+        onChange={ editSearchFilters } />
       <CourseTypeFilter 
         offeringTypes={ offeringTypes } 
-        onChange={ onChange } />
+        onChange={ editSearchFilters } />
       <DurationFilter 
         duration={ duration }
         durationTypes={ durationTypes }
-        onChange={ onChange } />
+        onChange={ editSearchFilters } />
     </fieldset>
   )
 }
