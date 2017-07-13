@@ -65,14 +65,7 @@ function CourseTypeFilter (props: any) {
   )
 }
 
-interface FieldsForLanguageCoursesByLocationProps {
-  locations: any,
-  offeringTypes: any,
-  duration: any,
-  durationTypes: any,
-  editSearchFilters: any,
-}
-function FieldsForLanguageCoursesByLocation (props: FieldsForLanguageCoursesByLocationProps) {
+function FieldsForLanguageCoursesByLocation (props: any) {
   const { locations, offeringTypes, duration, durationTypes, editSearchFilters } = props;
 
   return (
@@ -98,7 +91,11 @@ function FieldsForLanguageCoursesBySchool () {
   )
 }
 
-export default function FieldsForLanguageCourses ({ tabIndex, switchTabs, error, isLoading, ...props }) {
+// We don't gain any type safety like this, but we get easier refactors because of { ...props } below
+// otherwise, if we decompose the params in the normal place ({ here, you, know }) then we 
+// must pass them all down the chain explicitly
+export default function FieldsForLanguageCourses (ownProps: any) {
+  const { tabIndex, switchTabs, error, isLoading, ...props } = ownProps;
 
   if (error) {
     return ( <div>Error! {error}</div> );
@@ -119,7 +116,7 @@ export default function FieldsForLanguageCourses ({ tabIndex, switchTabs, error,
           <button value="1" onClick={ clickHandler }>By School</button>
         </div>
         <ModalComponents mode={ tabIndex }>
-          <FieldsForLanguageCoursesByLocation { ...props as FieldsForLanguageCoursesByLocationProps } />
+          <FieldsForLanguageCoursesByLocation { ...props } />
           <FieldsForLanguageCoursesBySchool/>
         </ModalComponents>
       </fieldset>

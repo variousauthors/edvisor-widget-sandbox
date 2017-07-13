@@ -35,7 +35,8 @@ function NationalityFilter ({ countries, onChange }) {
   )
 }
 
-export default function FieldsForStudentInformation ({ age, countries, editSearchFilters, error, isLoading, }) {
+export default function FieldsForStudentInformation (ownProps: any) {
+  const { age, countries, editSearchFilters, error, isLoading } = ownProps;
 
   if (error) {
     return ( <div>Error! {error}</div> );
@@ -45,10 +46,12 @@ export default function FieldsForStudentInformation ({ age, countries, editSearc
     return ( <div>Loading</div> );
   }
 
+  debugger
+
   return (
     <fieldset>
       <legend>Student Information</legend>
-      <NationalityFilter countries={ countries } onChange={ editSearchFilters } />
+      <NationalityFilter countries= { countries } onChange={ editSearchFilters } />
       <AgeFilter age={ age } onChange={ editSearchFilters } />
     </fieldset>
   )

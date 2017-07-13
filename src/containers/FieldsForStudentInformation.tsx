@@ -40,6 +40,7 @@ function mapApolloToProps (apollo) {
       error: apollo.data.error ? apollo.data.error.message : null,
       isLoading: apollo.data.loading,
       countries: apollo.data.countries,
+      graphql: graphql<any, any, any>(query, options),
     }
 }
 
